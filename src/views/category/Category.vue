@@ -1,14 +1,14 @@
 <template>
 
-<h2>分类</h2>
+  <h2>分类</h2>
 </template>
 
 <script>
 
-export default {
-name:'Category',
+  export default {
+    name: 'Category',
 
-}
+  }
 </script>
 
 <style>

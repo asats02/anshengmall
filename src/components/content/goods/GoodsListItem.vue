@@ -1,38 +1,52 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <!--  @load  监听图片加载完成事件 -->
-<img :src="goodsItem.show.img" alt="" @load="imageLoad">
-<div class="goods-info">
-  <p>{{goodsItem.title}}</p>
-  <span class="price"> {{goodsItem.price}}</span>
-  <span class="collect"> {{goodsItem.cfav}}</span>
-</div>
+    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <div class="goods-info">
+      <p>{{goodsItem.title}}</p>
+      <span class="price"> {{goodsItem.price}}</span>
+      <span class="collect"> {{goodsItem.cfav}}</span>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-name:'GoodsListItem',
-props:{
-goodsItem:{
-  type:Object,
-  default(){
-    return {}
+  export default {
+    name: 'GoodsListItem',
+    props: {
+      goodsItem: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
+    methods: {
+      imageLoad() {
+        //  发出事件总线
+
+        this.$bus.$emit('itemImageLoad')
+      },
+      itemClick() {
+        this.$router.push('/detail/' + this.goodsItem.iid)
+        //  index.js  里面path 写'detail/:iid'
+        // console.log(this.goodsItem);
+        
+        //  下面这种动态路由，index.js  里面path 直接写'detail'
+
+        /* this.$router.push({
+          path:'/detail',
+          query:{
+            iid:this.goodsItem.iid
+          }
+        }) */
+      }
+    }
   }
-}
-},
-methods:{
-imageLoad(){
-  //  发出事件总线
- 
-  this.$bus.$emit('itemImageLoad')
-}
-}
-}
 </script>
 
 <style>
-.goods-item {
+  .goods-item {
     padding-bottom: 40px;
     position: relative;
 

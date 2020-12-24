@@ -7,13 +7,13 @@
 </template>
 
 <script>
-export default {
-name:'HomeFeatureView'
-}
+  export default {
+    name: 'HomeFeatureView'
+  }
 </script>
 
 <style>
-.feature img{
-  width: 100%;
-}
+  .feature img {
+    width: 100%;
+  }
 </style>

@@ -9,7 +9,9 @@ const Category = () =>
 const Cart = () =>
     import ('../views/cart/Cart')
 const Profile = () =>
-    import ('../views/profile/Profile')
+  import('../views/profile/Profile')
+const Detail = () =>
+  import ('../views/detail/Detail')
 
 Vue.use(VueRouter)
 const routes = [{
@@ -31,10 +33,19 @@ const routes = [{
     {
         path: '/profile',
         component: Profile
+    },
+    {
+        path: '/detail/:iid',
+
+        //  动态路由
+        // path:'/detail',
+        component: Detail
     }
 ]
 const router = new VueRouter({
     routes,
     mode: 'history'
 })
+
+
 export default router
