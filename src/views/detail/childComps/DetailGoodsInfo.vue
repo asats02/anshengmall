@@ -1,5 +1,5 @@
-<template lang="">
-  <div v-if="Object.keys(detailInfo).length !== 0" class="goods-info">
+<template>
+  <div class="goods-info" v-if="Object.keys(detailInfo).length !==0">
     <div class="info-desc clear-fix">
       <div class="start">
       </div>
@@ -8,7 +8,7 @@
     </div>
     <div class="info-key">{{detailInfo.detailImage[0].key}}</div>
     <div class="info-list">
-      <img v-for="(item, index) in detailInfo.detailImage[0].list" :key="index" :src="item" @load="imgLoad" alt="">
+      <img v-for="(item, index) in detailInfo.detailImage[0].list" :key="index" :src="item" @load="detimgLoad" alt="">
     </div>
   </div>
 </template>
@@ -17,42 +17,49 @@
     name: 'DetailGoodsInfo',
     props: {
       detailInfo: {
-        type: Object
+        type: Object,
+        default() {
+          return {}
+        }
       }
     },
     data() {
-			return {
-				counter: 0,
+      return {
+        counter: 0,
         imagesLength: 0
       }
     },
     methods: {
-	    imgLoad() {
+      detimgLoad() {
+        // this.$emit('imageLoad')
+        
         // 判断, 所有的图片都加载完了, 那么进行一次回调就可以了.
         if (++this.counter === this.imagesLength) {
           this.$emit('imageLoad');
         }
-	    }
+      }
     },
     watch: {
-	    detailInfo() {
-	      // 获取图片的个数
-	    	this.imagesLength = this.detailInfo.detailImage[0].list.length
-	    }
+      detailInfo() {
+        // 获取图片的个数
+        this.imagesLength = this.detailInfo.detailImage[0].list.length
+      }
     }
   }
 </script>
 <style scoped>
-.goods-info {
+  .goods-info {
     padding: 20px 0;
     border-bottom: 5px solid #f2f5f8;
+    position: relative;
   }
 
   .info-desc {
     padding: 0 15px;
   }
 
-  .info-desc .start, .info-desc .end {
+  .info-desc .start,
+  .info-desc .end {
     width: 90px;
     height: 1px;
     background-color: #a3a3a5;
@@ -67,7 +74,8 @@
     float: right;
   }
 
-  .info-desc .start::before, .info-desc .end::after {
+  .info-desc .start::before,
+  .info-desc .end::after {
     content: '';
     position: absolute;
     width: 5px;

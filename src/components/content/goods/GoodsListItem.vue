@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!--  @load  监听图片加载完成事件 -->
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price"> {{goodsItem.price}}</span>
@@ -21,17 +21,29 @@
         }
       }
     },
+    computed: {
+      showImage() {
+        return this.goodsItem.image || this.goodsItem.show.img
+      }
+    },
     methods: {
       imageLoad() {
         //  发出事件总线
-
         this.$bus.$emit('itemImageLoad')
+        
+        //  另一种思路，用路由判断
+        /* if (this.$route.path.indexOf('/home')) {
+          this.$bus.$emit('itemImageLoad')
+        }else if(this.$route.path.indexOf('/detail')){
+          this.$bus.$emit('itemImageLoad')
+        } */
+
       },
       itemClick() {
         this.$router.push('/detail/' + this.goodsItem.iid)
         //  index.js  里面path 写'detail/:iid'
         // console.log(this.goodsItem);
-        
+
         //  下面这种动态路由，index.js  里面path 直接写'detail'
 
         /* this.$router.push({

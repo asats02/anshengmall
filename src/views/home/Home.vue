@@ -80,7 +80,8 @@
         isShowBackTop: false,
         tabOffsetTop: 0,
         isTabFixed: false,
-        saveY: 0
+        saveY: 0,
+        itemImgListener: null
       }
     },
     computed: {
@@ -99,6 +100,8 @@
     deactivated() {
       //  离开
       this.saveY = this.$refs.scroll.bs.y
+      //  取消全局事件的监听
+      this.$bus.$off('itemImgLoad', this.itemImgListener)
     },
     created() {
 
@@ -115,11 +118,9 @@
     mounted() {
 
       //   监听事件总线
-      const refresh = debounce(this.$refs.scroll.refresh, 100)
-      this.$bus.$on('itemImageLoad', () => {
-        refresh()
-
-      })
+      const newRefresh = debounce(this.$refs.scroll.refresh, 100)
+      this.itemImgListener = () => { newRefresh() }
+      this.$bus.$on('itemImageLoad', this.itemImgListener)
     },
     methods: {
       /*  事件监听 */
